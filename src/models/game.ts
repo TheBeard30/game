@@ -13,12 +13,12 @@ export class Game {
   }
 
   init() {
-    this.player = new Player(this.ctx, 300, 300);
+    this.player = new Player(this.ctx, 300, 500);
   }
 
   start = () => {
     this.ctx.clearRect(0, 0, 600, 600);
-    this.player.drawPlayer();
+    this.player.draw();
     window.requestAnimationFrame(this.start);
   };
 
