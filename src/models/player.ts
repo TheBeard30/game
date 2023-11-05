@@ -1,6 +1,7 @@
 import { CONFIG } from '../config';
 import { Direction } from '../types';
 import { Bullet } from './bullet';
+import { Enemy } from './enemy';
 
 export class Player {
   private ctx: CanvasRenderingContext2D;
@@ -25,7 +26,6 @@ export class Player {
   init() {
     this.draw();
     window.addEventListener('keydown', ev => {
-      console.log(ev);
       if (ev.code == 'ArrowUp') {
         this.moveUp();
       }
@@ -62,7 +62,7 @@ export class Player {
     // 边界处理
     for (let i = this.bulletList.length - 1; i >= 0; i--) {
       const bullet = this.bulletList[i];
-      if (bullet.isOutBound) {
+      if (bullet.isOutBound()) {
         this.bulletList.splice(i, 1);
       }
     }
@@ -114,5 +114,25 @@ export class Player {
     [x, y] = fn(x, y);
     const bullet = new Bullet(this.ctx, x, y, this.direction);
     this.bulletList.push(bullet);
+    // TODO 检测是否相撞
+  }
+
+  destoryEnemy(enemyList: Enemy[]) {
+    for (let i = this.bulletList.length - 1; i >= 0; i--) {
+      const bullet = this.bulletList[i];
+      for (let j = enemyList.length - 1; j >= 0; j--) {
+        const enemy = enemyList[j];
+        if (
+          bullet.getX() > enemy.getX() &&
+          bullet.getX() < enemy.getX() + 30 &&
+          bullet.getY() > enemy.getY() &&
+          bullet.getY() < enemy.getY() + 40
+        ) {
+          this.bulletList.splice(i, 1);
+          enemyList.splice(j, 1);
+          break;
+        }
+      }
+    }
   }
 }

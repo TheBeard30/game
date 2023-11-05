@@ -20,6 +20,14 @@ export class Bullet {
     this.draw();
   }
 
+  getX() {
+    return this.x;
+  }
+
+  getY() {
+    return this.y;
+  }
+
   draw() {
     this.ctx.beginPath();
     this.ctx.fillStyle = 'red';

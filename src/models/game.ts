@@ -27,6 +27,7 @@ export class Game {
     this.ctx.clearRect(0, 0, CONFIG.PANEL_WIDTH, CONFIG.PANEL_HEIGHT);
     this.player.draw();
     this.enemyList.forEach(e => e.draw());
+    this.player.destoryEnemy(this.enemyList);
     window.requestAnimationFrame(this.start);
   };
 
