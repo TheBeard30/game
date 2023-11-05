@@ -69,21 +69,25 @@ export class Player {
   }
 
   moveLeft() {
+    if (this.x - 30 < 0) return;
     this.direction = Direction.left;
     this.x -= this.speed;
   }
 
   moveRight() {
+    if (this.x + 30 > CONFIG.PANEL_WIDTH) return;
     this.direction = Direction.right;
     this.x += this.speed;
   }
 
   moveUp() {
+    if (this.y - 30 < 0) return;
     this.direction = Direction.up;
     this.y -= this.speed;
   }
 
   moveDown() {
+    if (this.y + 30 > CONFIG.PANEL_HEIGHT) return;
     this.direction = Direction.down;
     this.y += this.speed;
   }
