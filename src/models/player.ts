@@ -1,3 +1,4 @@
+import { CONFIG } from '../config';
 import { Direction } from '../types';
 import { Bullet } from './bullet';
 
@@ -11,6 +12,8 @@ export class Player {
   private direction: Direction = Direction.up;
 
   private bulletList: Bullet[] = [];
+
+  private speed: number = CONFIG.PLAYER_SPEED;
 
   constructor(ctx: CanvasRenderingContext2D, x: number, y: number) {
     this.ctx = ctx;
@@ -47,7 +50,6 @@ export class Player {
     this.ctx.arc(this.x, this.y, 30, 0, Math.PI * 2, true);
     this.ctx.fill();
     this.ctx.stroke();
-    this.ctx.restore();
     this.drawBullet();
   }
 
@@ -58,26 +60,32 @@ export class Player {
 
   destoryBullet() {
     // 边界处理
+    for (let i = this.bulletList.length - 1; i >= 0; i--) {
+      const bullet = this.bulletList[i];
+      if (bullet.isOutBound) {
+        this.bulletList.splice(i, 1);
+      }
+    }
   }
 
   moveLeft() {
     this.direction = Direction.left;
-    this.x -= 20;
+    this.x -= this.speed;
   }
 
   moveRight() {
     this.direction = Direction.right;
-    this.x += 20;
+    this.x += this.speed;
   }
 
   moveUp() {
     this.direction = Direction.up;
-    this.y -= 20;
+    this.y -= this.speed;
   }
 
   moveDown() {
     this.direction = Direction.down;
-    this.y += 20;
+    this.y += this.speed;
   }
 
   shoot() {

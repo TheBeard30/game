@@ -23,10 +23,16 @@ export class Bullet {
   draw() {
     this.ctx.beginPath();
     this.ctx.fillStyle = 'red';
-    this.ctx.rect(this.x, this.y, 2, 4);
+    let width = 2;
+    let height = 4;
+    if (this.direction == Direction.left || this.direction == Direction.right) {
+      width = 4;
+      height = 2;
+    }
+    this.ctx.rect(this.x, this.y, width, height);
     this.ctx.fill();
+    this.ctx.lineWidth = 1;
     this.ctx.stroke();
-    this.ctx.restore();
     this.move();
   }
 
@@ -58,4 +64,8 @@ export class Bullet {
   moveDown = () => {
     this.y += this.speed;
   };
+
+  isOutBound(): boolean {
+    return this.x < 0 || this.x > 1200 || this.y < 0 || this.y > 600;
+  }
 }
